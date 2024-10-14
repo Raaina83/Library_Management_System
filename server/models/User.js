@@ -15,7 +15,7 @@ const userSchema = new Schema({
         require: true,
     },
     password: {
-        type: Number,
+        type: String,
         min: 6,
     },
     profile: {
