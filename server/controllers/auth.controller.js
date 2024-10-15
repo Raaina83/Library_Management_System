@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from 'bcryptjs';
-import { generateTokenAndCookie } from "../utils/generateTokenAndCookie.js";
+import { cookieOptions, generateTokenAndCookie } from "../utils/generateTokenAndCookie.js";
 
 const login = async(req, res) => {
     const {name, email, password} = req.body;
@@ -54,4 +54,15 @@ const signUp = async(req, res) => {
     }
 }
 
-export {login, signUp};
+const logout = async(req, res) => {
+    console.log(req.cookies);
+    return res
+        .cookie("jwt", {...cookieOptions, maxAge: 0})
+        .status(200)
+        .json({
+            success: true,
+            message: "Logged out successfully!"
+        })
+}
+
+export {login, signUp, logout};

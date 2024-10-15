@@ -19,4 +19,4 @@ const generateTokenAndCookie = (userId, res, message) => {
     });
 }
 
-export {generateTokenAndCookie};
+export {generateTokenAndCookie, cookieOptions};
