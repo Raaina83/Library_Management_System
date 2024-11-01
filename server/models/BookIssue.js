@@ -11,15 +11,15 @@ const bookIssueSchema = new Schema({
         required: true,
     },
     from: {
-        type: String,
+        type: Date,
         require: true
     },
     till: {
-        type: String,
+        type: Date,
         require: true,
     },
     returnDate: {
-        type: String,
+        type: Date,
     },
 });
 

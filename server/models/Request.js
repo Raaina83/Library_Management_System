@@ -6,11 +6,11 @@ const requestSchema = new Schema({
         ref: "Student",
         required: true,
     },
-    receiver: {
-        type: Types.ObjectId,
-        ref: "Librarian",
-        required: true,
-    },
+    // receiver: {
+    //     type: Types.ObjectId,
+    //     ref: "Librarian",
+    //     required: true,
+    // },
     status: {
         type: String,
         enum: ["pending", "approved", "rejected"],
