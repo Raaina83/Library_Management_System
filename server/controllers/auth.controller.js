@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from 'bcryptjs';
 import { cookieOptions, generateTokenAndCookie } from "../utils/generateTokenAndCookie.js";
+import Librarian from "../models/Librarian.js";
 
 const login = async(req, res) => {
     const {name, email, password} = req.body;
@@ -48,6 +49,16 @@ const signUp = async(req, res) => {
             email,
             password:hashedPassword,
             profile
+        });
+        await newUser.save();
+        generateTokenAndCookie(newUser._id, res, "User created");
+    }
+    else if(userType == "librarian") {
+        const newUser = new Librarian({
+            role: userType,
+            name: name,
+            email: email,
+            password: password
         });
         await newUser.save();
         generateTokenAndCookie(newUser._id, res, "User created");

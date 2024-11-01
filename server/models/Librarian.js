@@ -1,6 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 
 const librarianSchema = new Schema({
+    role: {
+        type: String,
+    },
     name: {
         type: String,
         required: true,
