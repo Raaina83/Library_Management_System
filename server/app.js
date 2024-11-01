@@ -3,6 +3,7 @@ import connectToDB from './connectionMongoDB/connect.js';
 import dotenv from "dotenv";
 dotenv.config();
 import authUser from './routes/auth.route.js';
+import librarian from './routes/librarian.route.js';
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json()) //to parse the incoming request with JSON payloads from 
 app.use(cookieParser());
 
 app.use("/api/v1/auth/user", authUser);
+app.use("/api/librarian", librarian)
 
 
 app.listen(8080, () => {
