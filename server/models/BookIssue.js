@@ -21,7 +21,7 @@ const bookIssueSchema = new Schema({
     returnDate: {
         type: Date,
     },
-});
+}, {timestamps: true});
 
 const BookIssue = mongoose.model("BookIssue" ,bookIssueSchema);
 export default BookIssue;

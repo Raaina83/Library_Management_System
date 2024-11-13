@@ -27,14 +27,18 @@ const userSchema = new Schema({
     year: {
         type: Number,
     },
-    currentBookIssued: {
-        type: Types.ObjectId,
-        ref: "BookIssue",
-    },
-    previousBookIssued: {
-        type: Types.ObjectId,
-        ref: "BookIssue",
-    }
+    currentBookIssued: [
+        {
+            type: Types.ObjectId,
+            ref: "BookIssue",
+        },
+    ],
+    previousBookIssued: [
+        {
+            type: Types.ObjectId,
+            ref: "BookIssue",
+        }
+    ],
 },
 {timestamps: true});
 
