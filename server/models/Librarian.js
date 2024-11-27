@@ -14,7 +14,7 @@ const librarianSchema = new Schema({
     password: {
         type: Number,
     },
-});
+}, {timestamps: true});
 
 const Librarian = mongoose.model("Librarian" ,librarianSchema);
 export default Librarian;

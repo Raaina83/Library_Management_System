@@ -1,5 +1,27 @@
+import Book from "../models/Book.js";
 import BookIssue from "../models/BookIssue.js";
 import Request from "../models/Request.js";
+
+const addNewBook = async(req, res) => {
+    const {title, author, image, available} = req.body();
+
+    const book = await Book.find({title});
+    if(book) return new Error("Book with same title already exists.");
+
+    const newBook = new Book({
+        title,
+        author,
+        image,
+        available
+    });
+
+    return res  
+            .status(200)
+            .json({
+                success: true,
+                message: "New Book added!",
+            });
+}
 
 const getAllRequest = async(req, res) => {
     const pendingRequests = await Request.find({status: "pending"});
@@ -50,4 +72,4 @@ const approveRequest = async(req, res) => {
         });
 }
 
-export {getAllRequest, approveRequest};
+export {getAllRequest, approveRequest, addNewBook};

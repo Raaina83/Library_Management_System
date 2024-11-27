@@ -21,7 +21,7 @@ const requestSchema = new Schema({
         ref: "Book",
         required: true,
     }
-});
+}, {timestamps: true});
 
 const Request = mongoose.model("Request" ,requestSchema);
 export default Request;
