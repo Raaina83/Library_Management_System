@@ -1,5 +1,5 @@
-import BookIssue from "../models/BookIssue";
-import Request from "../models/Request";
+import BookIssue from "../models/BookIssue.js";
+import Request from "../models/Request.js";
 
 const getAllRequest = async(req, res) => {
     const pendingRequests = await Request.find({status: "pending"});

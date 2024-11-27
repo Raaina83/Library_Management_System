@@ -1,5 +1,5 @@
 import express from 'express'
-import { approveRequest, getAllRequest } from '../controllers/librarian.controller';
+import { approveRequest, getAllRequest } from '../controllers/librarian.controller.js';
 
 const router = express.Router();
 
