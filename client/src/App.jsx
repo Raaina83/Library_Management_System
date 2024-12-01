@@ -1,15 +1,24 @@
 
-import './App.css'
-import Dashboard from './components/Dashboard';
-import Login from './components/Login';
-import SignupForm from './components/SignUp';
+// import './App.css'
+// import BookReport from './components/BookReport';
+// import Header from './components/Header';
+import Home from './components/Home';
+// import IssuedBooksTable from './components/IssuedBooksTable';
+// import Login from './components/Login';
+// import Profile from './components/Profile';
+// import RequestsTable from './components/RequestsTable';
+// import SignupForm from './components/SignUp';
 
 function App() {
 
   return (
     <>
-    <SignupForm/>
-    {/* <Dashboard/> */}
+    {/* <Header/> */}
+    {/* <Profile/> */}
+    {/* <IssuedBooksTable/> */}
+    {/* <RequestsTable/> */}
+    {/* <SignupForm/> */}
+    <Home/>
     {/* <Login/> */}
     </>
   )
