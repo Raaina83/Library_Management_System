@@ -1,3 +1,4 @@
+import Home from "./Home";
 import IssuedBooksTableRow from "./IssuedBooksTableRow";
 
 const IssuedBooksTable = () => {
@@ -57,4 +58,4 @@ const IssuedBooksTable = () => {
   )
 };
 
-export default IssuedBooksTable;
+export default Home()(IssuedBooksTable);

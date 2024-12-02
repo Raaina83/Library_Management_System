@@ -12,4 +12,4 @@ const IssuedBooksTableRow = ({name, branch, year, book, dueDate, index}) => {
   );
 }
 
-export default IssuedBooksTableRow;
+export default (IssuedBooksTableRow);
