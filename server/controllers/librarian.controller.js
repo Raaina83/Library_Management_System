@@ -3,7 +3,7 @@ import BookIssue from "../models/BookIssue.js";
 import Request from "../models/Request.js";
 
 const addNewBook = async(req, res) => {
-    const {title, author, image, available} = req.body();
+    const {title, author, image, available} = req.body;
 
     const book = await Book.find({title});
     if(book) return new Error("Book with same title already exists.");
@@ -14,6 +14,7 @@ const addNewBook = async(req, res) => {
         image,
         available
     });
+    await newBook.save();
 
     return res  
             .status(200)

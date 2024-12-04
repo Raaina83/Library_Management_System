@@ -1,5 +1,5 @@
 import mongoose, { Schema, Types } from "mongoose";
-import Rating from "./Rating";
+// import Rating from "./Rating.js";
 
 const bookSchema = new Schema({
     title: {
@@ -19,7 +19,7 @@ const bookSchema = new Schema({
     ratings: [
         {
             type: Types.ObjectId,
-            ref: Rating
+            ref: "Rating"
         },
     ],
 }, {timestamps: true});

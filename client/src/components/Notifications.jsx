@@ -3,7 +3,7 @@ export const Notifications = () => {
   return (
     <>
       <dialog id="my_modal_1" className="modal">
-      <div className="modal-box">
+      <div className="modal-box bg-white">
         <h3 className="font-bold text-lg">Hello!</h3>
         <p className="py-4">Press ESC key or click the button below to close</p>
         <div className="modal-action">

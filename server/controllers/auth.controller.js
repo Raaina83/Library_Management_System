@@ -10,7 +10,7 @@ const login = async(req, res) => {
     if(!user || !isValidPassword) {
         throw new Error("Invalid username or password!");
     }
-    generateTokenAndCookie(user._id, res, `Welcome back ${user.name}`);
+    generateTokenAndCookie(user, res, `Welcome back ${user.name}`);
 }
 
 const signUp = async(req, res) => {
@@ -54,6 +54,10 @@ const signUp = async(req, res) => {
         generateTokenAndCookie(newUser._id, res, "User created");
     }
     else if(userType == "librarian") {
+        const user = await Librarian.findOne({email});
+        if(user) {
+            throw new Error("User already exists");
+        }
         const newUser = new Librarian({
             role: userType,
             name: name,

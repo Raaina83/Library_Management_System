@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types } from "mongoose";
-import User from "./User";
-import Book from "./Book";
+// import User from "./User";
+// import Book from "./Book";
 
 const ratingSchema = new Schema({
     rating: {
@@ -10,7 +10,7 @@ const ratingSchema = new Schema({
     },
     owner: {
         type: Types.ObjectId,
-        ref: User
+        ref: "User"
     },
 }, {timestamps: true});
 

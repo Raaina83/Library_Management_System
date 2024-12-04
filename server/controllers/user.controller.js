@@ -35,7 +35,9 @@ export const getAllIssuedBooks = async (req, res) => {
 export const sendRequest = async (req, res) => {
     try {
         const { bookId } = req.body;
-        const userId = req.user._id;
+        const userId = req.user;
+        console.log(req.user);
+        console.log(userId);
 
         // Check if the user already has 2 books issued
         const issuedBooksCount = await BookIssue.countDocuments({ borrower: userId });

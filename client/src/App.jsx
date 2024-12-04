@@ -8,14 +8,14 @@ import RequestsTable from './components/RequestsTable'
 import './App.css';
 
 function App() {
-  const user = null;
-
+  const user = ""
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<BooksDisplay/>}></Route>
-        <Route path="/issuedBooks" element={<IssuedBooksTable/>}></Route>
-        <Route path="/requests" element={<RequestsTable/>}></Route>
+        <Route></Route>
+        {/* <Route path="/issuedBooks" element={<IssuedBooksTable/>}></Route>
+        <Route path="/requests" element={<RequestsTable/>}></Route> */}
         <Route path="/login" element={
           <ProtectRoute user={!user} redirect="/">
             <Login/>

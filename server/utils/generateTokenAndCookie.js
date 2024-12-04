@@ -7,14 +7,14 @@ const cookieOptions = {
     secure: true
 }
 
-const generateTokenAndCookie = (userId, res, message) => {
-    const token = jwt.sign({userId}, process.env.JWT_SECRET, {
+const generateTokenAndCookie = (user, res, message) => {
+    const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {
         expiresIn: '7d'
     });
 
     return res.cookie("jwt", token, cookieOptions).json({
         success: true,
-        userId,
+        user,
         message
     });
 }
