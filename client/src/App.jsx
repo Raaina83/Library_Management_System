@@ -6,6 +6,7 @@ import BooksDisplay from "./components/BooksDisplay";
 import IssuedBooksTable from "./components/IssuedBooksTable";
 import RequestsTable from './components/RequestsTable'
 import './App.css';
+import Profile from "./components/Profile";
 
 function App() {
   const user = ""
@@ -14,8 +15,9 @@ function App() {
       <Routes>
         <Route path='/' element={<BooksDisplay/>}></Route>
         <Route></Route>
-        {/* <Route path="/issuedBooks" element={<IssuedBooksTable/>}></Route>
-        <Route path="/requests" element={<RequestsTable/>}></Route> */}
+        <Route path="/issuedBooks" element={<IssuedBooksTable/>}></Route>
+        <Route path="/requests" element={<RequestsTable/>}></Route>
+        <Route path="/profile" element={<Profile/>}></Route>
         <Route path="/login" element={
           <ProtectRoute user={!user} redirect="/">
             <Login/>

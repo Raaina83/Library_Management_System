@@ -27,16 +27,27 @@ const Dashboard = () => {
       attribute: "Requests",
       icon: <RxDashboard/>,
       link: "/requests",
+    },
+    {
+      attribute: "Issued Books",
+      icon: <FaBookOpen/>,
+      link: "/issuedBooks",
     }
   ]
+
+  const userType = "librarian";
   
   return (
     <div className="w-64 text-white flex flex-col drawer-side">
       <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
         <nav className="flex-1 p-4 space-y-4 text-md bg-indigo-700">
-          {userDashboardItems.map((item , key) => (
+          {userType == "student" ? userDashboardItems.map((item , key) => (
             <DashboardItems attribute={item.attribute} link={item.link} icon={item.icon} key={key}/>
-          ))}
+          )): 
+            librarianDashboardItems.map((item, key) => (
+              <DashboardItems attribute={item.attribute} link={item.link} icon={item.icon} key={key}/>
+            ))
+          }
         </nav>
     </div>
   )

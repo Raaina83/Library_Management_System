@@ -1,3 +1,4 @@
+import Home from "./Home"
 
 const Profile = () => {
   return (
@@ -30,4 +31,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default Home()(Profile)
