@@ -5,6 +5,7 @@ import {Route, Routes} from 'react-router-dom'
 import Profile from "./Profile";
 import IssuedBooksTable from "./IssuedBooksTable";
 import RequestsTable from "./RequestsTable";
+import IndividualBook from "./IndividualBook";
 
 const Home = () => {
 
@@ -20,7 +21,8 @@ const Home = () => {
         {/* Content */}
         <div className="flex-1 flex items-center justify-center bg-gray-200">
           <Routes>
-            <Route path="/" element={<BooksDisplay/>}></Route>
+            <Route path="/*" element={<BooksDisplay/>}></Route>
+            <Route path="/book/:id" element={<IndividualBook/>}></Route>
             <Route path="/profile" element={<Profile/>}></Route>
             <Route path="/issuedBooks" element={<IssuedBooksTable/>}></Route>
             <Route path="/requests" element={<RequestsTable/>}></Route>

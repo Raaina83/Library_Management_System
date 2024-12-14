@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const BooksDisplay = () => {
   const [books, setBooks] = useState(null);
@@ -61,8 +62,9 @@ const BooksDisplay = () => {
     <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {books?.map((book) => (
-                <div
-                  key={book._id}
+                <Link key={book._id} to={`/book/${book._id}`}>
+                  <div
+                  // key={book._id}
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
                 >
                   <img
@@ -75,6 +77,7 @@ const BooksDisplay = () => {
                     <p className="text-gray-700">by {book.author}</p>
                   </div>
                 </div>
+                 </Link>
               ))}
             </div>
           </div>

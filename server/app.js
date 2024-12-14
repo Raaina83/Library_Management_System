@@ -7,6 +7,7 @@ import librarian from './routes/librarian.route.js';
 import userRoutes from './routes/user.route.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
+import errorMiddleware from './middlewares/error.js';
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.use("/api/v1/auth/user", authUser);
 app.use("/api/v1/librarian", librarian);
 app.use("/api/v1/user", userRoutes);
 
-
+app.use(errorMiddleware)
 
 app.listen(8080, () => {
     console.log("app is listening on port 8080");

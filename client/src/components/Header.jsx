@@ -3,6 +3,7 @@ import { Notifications } from "./Notifications"
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { userNotExists } from "../redux/reducers/auth"
+import toast from "react-hot-toast"
 
 const Header = () => {
   const dispatch  = useDispatch();
@@ -15,10 +16,10 @@ const Header = () => {
       console.log("log",data)
       window.location.href = "/login"
       // dispatch(api.util.resetApiState())
-      // toast.success(data.message)
+      toast.success(data.message)
     } catch (error) {
       console.log(error)
-      // toast.error(error?.response?.data?.message || "Something went wrong")
+      toast.error(error?.response?.data?.message || "Something went wrong")
     }
   }
   return (

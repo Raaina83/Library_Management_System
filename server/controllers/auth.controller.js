@@ -2,23 +2,24 @@ import User from "../models/User.js";
 import bcrypt from 'bcryptjs';
 import { cookieOptions, generateTokenAndCookie } from "../utils/generateTokenAndCookie.js";
 import Librarian from "../models/Librarian.js";
+import { ErrorHandler } from "../utils/utility.js";
 
-const login = async(req, res) => {
+const login = async(req, res, next) => {
     const {name, email, password} = req.body;
-    const user = await User.findOne({email}) || await Librarian.findOne({email});
+    const user = await User.findOne({email});
     const isValidPassword = await bcrypt.compare(password, user?.password);
     if(!user || !isValidPassword) {
-        throw new Error("Invalid username or password!");
+        return next(new ErrorHandler("Invalid username or password!", 401));
     }
     generateTokenAndCookie(user, res, `Welcome back ${user.name}`);
 }
 
-const signUp = async(req, res) => {
+const signUp = async(req, res, next) => {
     const {userType, name, email, password, confirmPassword, profile, branch, year} = req.body;
-    if(password.length < 6) throw new Error("password must have at least 6 digits");
+    if(password.length < 6) return next(new ErrorHandler("password must have at least 6 digits", 401));
 
     if(password !== confirmPassword) {
-        throw new Error("Passwords does not match");
+        return next(new ErrorHandler("Passwords does not match", 401));
     }
 
     const user = await User.findOne({email});
@@ -28,7 +29,7 @@ const signUp = async(req, res) => {
     const salt = await bcrypt.genSalt(10);    
     const hashedPassword = await bcrypt.hash(password, salt);
     if(userType === "student") {
-        if(!branch || !year) throw new Error("No branch or year");
+        if(!branch || !year) return next(new ErrorHandler("No branch or year", 401));
         const newUser = new User({
             userType,
             name,
@@ -54,10 +55,6 @@ const signUp = async(req, res) => {
         generateTokenAndCookie(newUser._id, res, "User created");
     }
     else if(userType == "librarian") {
-        const user = await Librarian.findOne({email});
-        if(user) {
-            throw new Error("User already exists");
-        }
         const newUser = new User({
             userType,
             name: name,

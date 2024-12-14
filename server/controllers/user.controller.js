@@ -2,8 +2,8 @@ import Book from '../models/Book.js';
 import BookIssue from '../models/BookIssue.js';
 import User from '../models/User.js';
 import Request from '../models/Request.js';
+import { ErrorHandler } from '../utils/utility.js';
 
-// Get all books
 export const getAllBooks = async (req, res) => {
     try {
         const books = await Book.find();
@@ -16,10 +16,26 @@ export const getAllBooks = async (req, res) => {
     }
 };
 
-// Get all issued books for a user
+export const getBookDetails = async(req, res, next) => {
+    try {
+        const bookId = req.params.id;
+        const book = await Book.findById(bookId);
+        if(!book) {
+            return next(new ErrorHandler("Book does not exist", 401));
+        }
+
+        res.status(200).json({
+            success: true,
+            book
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const getAllIssuedBooks = async (req, res) => {
     try {
-        const userId = req.user._id; // Assuming `req.user._id` is set by authentication middleware
+        const userId = req.user._id;
         const issuedBooks = await BookIssue.find({ borrower: userId }).populate("bookId");
 
         res.status(200).json({
@@ -31,22 +47,21 @@ export const getAllIssuedBooks = async (req, res) => {
     }
 };
 
-// Send book issue request
-export const sendRequest = async (req, res) => {
+export const sendRequest = async (req, res, next) => {
     try {
         const { bookId } = req.body;
         const userId = req.user;
-        // console.log(req.user);
-        // console.log(userId);
 
-        // Check if the user already has 2 books issued
+        const alreadyIssued = await Request.find({sender: userId, bookId})
+        if(alreadyIssued) {
+            return next(new ErrorHandler("Book is already issued", 401));
+        }
         const issuedBooksCount = await BookIssue.countDocuments({ borrower: userId });
         if (issuedBooksCount >= 2) {
             return res.status(400).json({ success: false, message: "User cannot issue more than 2 books." });
         }
 
-        // Create request
-        const newRequest = new Request({
+       const newRequest = new Request({
             sender: userId,
             bookId
         });
@@ -61,7 +76,6 @@ export const sendRequest = async (req, res) => {
     }
 };
 
-// Get user profile
 export const getUserProfile = async (req, res) => {
     try {
         const userA  = req.user;
@@ -72,7 +86,7 @@ export const getUserProfile = async (req, res) => {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        const issuedBooksCount = await BookIssue.countDocuments({ borrower: userA._id });
+        // const issuedBooksCount = await BookIssue.countDocuments({ borrower: userA._id });
 
         res.status(200).json({
             success: true,

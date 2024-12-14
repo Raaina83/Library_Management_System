@@ -1,17 +1,13 @@
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 // import Home from './components/Home';
 import Login from './components/Login';
-import ProtectRoute from "./components/auth/ProtectRoute";
-import BooksDisplay from "./components/BooksDisplay";
-import IssuedBooksTable from "./components/IssuedBooksTable";
-import RequestsTable from './components/RequestsTable'
 import './App.css';
-import Profile from "./components/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
 import { userExists, userNotExists } from "./redux/reducers/auth";
 import Home from "./components/Home";
+import {Toaster} from "react-hot-toast";
 
 function App() {
   const {user} = useSelector(state => state.auth);
@@ -42,8 +38,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+          {user ? <Route path="/*" element={<Home/>}></Route> : <Route path="/login" element={<Login/>}></Route>}
           {user ? <Route path='/dashboard/*' element={<Home/>}></Route> : <Route path="/login" element={<Login/>}></Route>}
       </Routes>
+      <Toaster/>
     </BrowserRouter>
   )
 }

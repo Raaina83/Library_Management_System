@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { userExists } from "../redux/reducers/auth";
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const Login = () => {
 
   const handleLogin = async(e) => {
     e.preventDefault();
+    const toastId = toast.loading("Loggin in...");
     const config = {
       withCredentials: true,
       headers: {
@@ -30,10 +32,16 @@ const Login = () => {
       );
       console.log("djkwdhyu",data);
       dispatch(userExists(data.user));
+      toast.success(data.message, {
+        id: toastId
+      });
       window.location.href= "/dashboard";
 
     } catch (error) {
       console.log(error)
+      toast.error(error?.response?.data?.message || "Something went wrong", {
+        id: toastId
+      })
     }
   }
   
