@@ -31,6 +31,11 @@ function App() {
       if(user) {
         if(window.location.href == 'http://localhost:5173/login') window.location.href = 'http://localhost:5173/dashboard';
       }
+
+      // if(!user) {
+      //   if(window.location.href == 'http://localhost:5173/dashboard') window.location.href = 'http://localhost:5173/login'
+      // }
+
   }, [dispatch]);
 
 

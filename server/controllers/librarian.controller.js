@@ -25,7 +25,10 @@ const addNewBook = async(req, res) => {
 }
 
 const getAllRequest = async(req, res) => {
-    const pendingRequests = await Request.find({status: "pending"});
+    const pendingRequests = await Request
+                                        .find({status: "pending"})
+                                        .populate("sender", 'name branch year email')
+                                        .populate("bookId", 'title')
 
     return res
             .status(200)

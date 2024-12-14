@@ -3,7 +3,7 @@ import mongoose, { Schema, Types } from "mongoose";
 const userSchema = new Schema({
     userType: {
         type: String,
-        enum: ["student", "staff"],
+        enum: ["student", "staff", "librarian"],
         require: true
     },
     name: {

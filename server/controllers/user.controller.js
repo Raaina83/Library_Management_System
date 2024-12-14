@@ -36,8 +36,8 @@ export const sendRequest = async (req, res) => {
     try {
         const { bookId } = req.body;
         const userId = req.user;
-        console.log(req.user);
-        console.log(userId);
+        // console.log(req.user);
+        // console.log(userId);
 
         // Check if the user already has 2 books issued
         const issuedBooksCount = await BookIssue.countDocuments({ borrower: userId });
@@ -79,9 +79,8 @@ export const getUserProfile = async (req, res) => {
             profile: {
                 name: user.name,
                 email: user.email,
+                userType: user.userType,
                 profileImage: user.profile,
-                issuedBooksCount,
-                maxBookLimit: 2,
                 branch: user.branch,
                 year: user.year
             }

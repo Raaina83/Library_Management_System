@@ -3,7 +3,7 @@ import mongoose, { Schema, Types } from "mongoose";
 const requestSchema = new Schema({
     sender: {
         type: Types.ObjectId,
-        ref: "Student",
+        ref: "User",
         required: true,
     },
     // receiver: {

@@ -4,6 +4,7 @@ import Header from "./Header";
 import {Route, Routes} from 'react-router-dom'
 import Profile from "./Profile";
 import IssuedBooksTable from "./IssuedBooksTable";
+import RequestsTable from "./RequestsTable";
 
 const Home = () => {
 
@@ -22,6 +23,7 @@ const Home = () => {
             <Route path="/" element={<BooksDisplay/>}></Route>
             <Route path="/profile" element={<Profile/>}></Route>
             <Route path="/issuedBooks" element={<IssuedBooksTable/>}></Route>
+            <Route path="/requests" element={<RequestsTable/>}></Route>
           </Routes>
         </div>
       </div>

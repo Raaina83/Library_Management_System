@@ -5,7 +5,7 @@ import Librarian from "../models/Librarian.js";
 
 const login = async(req, res) => {
     const {name, email, password} = req.body;
-    const user = await User.findOne({email});
+    const user = await User.findOne({email}) || await Librarian.findOne({email});
     const isValidPassword = await bcrypt.compare(password, user?.password);
     if(!user || !isValidPassword) {
         throw new Error("Invalid username or password!");
@@ -58,8 +58,8 @@ const signUp = async(req, res) => {
         if(user) {
             throw new Error("User already exists");
         }
-        const newUser = new Librarian({
-            role: userType,
+        const newUser = new User({
+            userType,
             name: name,
             email: email,
             password: hashedPassword
