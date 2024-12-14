@@ -1,7 +1,24 @@
-import Home from "./Home";
+import { useEffect, useState } from "react";
 import IssuedBooksTableRow from "./IssuedBooksTableRow";
 
 const IssuedBooksTable = () => {
+    const [issuedBooks, setIssuedBooks] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+          try {
+            const data = await fetchData('http://localhost:8080/api/v1/user/books/issued');
+            setIssuedBooks(data);
+            // setLoading(false);
+          } catch (error) {
+            console.log(error);
+            // setError(error);
+            // setLoading(false);
+          }
+        }
+    
+        fetchData();
+      }, []);
     const data = [
         {
             name: "Raaina",
@@ -39,7 +56,7 @@ const IssuedBooksTable = () => {
             </tr>
             </thead>
             <tbody>
-                {data.map((item, key) => (
+                {issuedBooks?.map((item, key) => (
                     <IssuedBooksTableRow name={item.name} book={item.book} branch={item.branch} year={item.year} dueDate={item.dueDate} key={key} index={key}/>
                 ))}
             </tbody>
@@ -58,4 +75,4 @@ const IssuedBooksTable = () => {
   )
 };
 
-export default Home()(IssuedBooksTable);
+export default (IssuedBooksTable);

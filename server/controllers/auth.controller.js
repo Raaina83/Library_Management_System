@@ -62,7 +62,7 @@ const signUp = async(req, res) => {
             role: userType,
             name: name,
             email: email,
-            password: password
+            password: hashedPassword
         });
         await newUser.save();
         generateTokenAndCookie(newUser._id, res, "User created");
@@ -70,9 +70,8 @@ const signUp = async(req, res) => {
 }
 
 const logout = async(req, res) => {
-    console.log(req.cookies);
     return res
-        .cookie("jwt", {...cookieOptions, maxAge: 0})
+        .cookie("jwt", "" ,  {...cookieOptions, maxAge: 0})
         .status(200)
         .json({
             success: true,

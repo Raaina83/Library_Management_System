@@ -8,12 +8,12 @@ const Dashboard = () => {
     {
       attribute: "My Account",
       icon:  <VscAccount/>,
-      link: "/profile"
+      link: "/dashboard/profile"
     },
     {
       attribute: "Books Issues",
       icon: <FaBookOpen/>,
-      link: "/books",
+      link: "/dashboard/issuedBooks",
     },
   ]
 
@@ -21,7 +21,7 @@ const Dashboard = () => {
     {
       attribute: "My Account",
       icon: <VscAccount/>,
-      link: "/profile",
+      link: "/user/profile",
     },
     {
       attribute: "Requests",
@@ -31,11 +31,11 @@ const Dashboard = () => {
     {
       attribute: "Issued Books",
       icon: <FaBookOpen/>,
-      link: "/issuedBooks",
+      link: "/librarian/issuedBooks",
     }
   ]
 
-  const userType = "librarian";
+  const userType = "student";
   
   return (
     <div className="w-64 text-white flex flex-col drawer-side">

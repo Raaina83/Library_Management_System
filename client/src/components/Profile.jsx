@@ -1,6 +1,9 @@
+import { useSelector } from "react-redux"
 import Home from "./Home"
 
 const Profile = () => {
+    const {user} = useSelector(state => state.auth)
+    console.log(user)
   return (
     <div className=" text-black">
         <div className="flex w-[80vw] h-[30vh] bg-slate-300">
@@ -21,9 +24,9 @@ const Profile = () => {
             </div>
             <div className="w-[20%] flex flex-col justify-center gap-4 items-start">
                 <p className="text-lg">57689677</p>
-                <p className="text-lg">raainawhalla#@vhjsg</p>
-                <p className="text-lg">btech cse</p>
-                <p className="text-lg">3rd</p>
+                <p className="text-lg">{user.email}</p>
+                <p className="text-lg">{user.branch}</p>
+                <p className="text-lg">{user.year}</p>
             </div>
             
         </div>
@@ -31,4 +34,4 @@ const Profile = () => {
   )
 }
 
-export default Home()(Profile)
+export default (Profile)

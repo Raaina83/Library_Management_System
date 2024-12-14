@@ -12,7 +12,7 @@ const librarianSchema = new Schema({
         type: String
     },
     password: {
-        type: Number,
+        type: String,
     },
 }, {timestamps: true});
 

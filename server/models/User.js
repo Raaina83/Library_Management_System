@@ -39,6 +39,9 @@ const userSchema = new Schema({
             ref: "BookIssue",
         }
     ],
+    phone: {
+        type: Number
+    }
 },
 {timestamps: true});
 

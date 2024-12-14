@@ -1,5 +1,42 @@
+import axios from "axios";
+import { useState } from "react";
+import { userExists } from "../redux/reducers/auth";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
+  // const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async(e) => {
+    e.preventDefault();
+    const config = {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      const {data} = await axios.post('http://localhost:8080/api/v1/auth/user/login', 
+        {
+          name: "priya",
+          email,
+          password
+        },
+        config
+      );
+      console.log("djkwdhyu",data);
+      dispatch(userExists(data.user));
+      window.location.href= "/dashboard";
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -15,7 +52,7 @@ const Login = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form className="space-y-6" onSubmit={handleLogin}>
             <div>
               <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                 Email address
@@ -25,6 +62,8 @@ const Login = () => {
                   id="email"
                   name="email"
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="email"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -48,6 +87,8 @@ const Login = () => {
                   id="password"
                   name="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"

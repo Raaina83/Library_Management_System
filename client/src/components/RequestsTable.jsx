@@ -24,6 +24,7 @@ const RequestsTable = () => {
             book: "Discreete Maths-1",
             dueDate: "6/12/2024",
         },
+        
     ]
   return (
     <div className="overflow-x-hidden">
@@ -61,4 +62,4 @@ const RequestsTable = () => {
   )
 }
 
-export default Home()(RequestsTable);
+export default (RequestsTable);

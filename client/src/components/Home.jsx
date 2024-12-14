@@ -1,14 +1,12 @@
-// import { IoIosNotifications } from "react-icons/io";
-// import { Notifications } from "./Notifications";
-// import BooksDisplay from "./BooksDisplay";
+import BooksDisplay from "./BooksDisplay";
 import Dashboard from "./Dashboard";
 import Header from "./Header";
-// import Profile from "./Profile";
-// import IssuedBooksTable from './IssuedBooksTable'
-// import RequestsTable from "./RequestsTable";
+import {Route, Routes} from 'react-router-dom'
+import Profile from "./Profile";
+import IssuedBooksTable from "./IssuedBooksTable";
 
-const Home = () => (WrappedComponent) => {
-  return function WC(props) {
+const Home = () => {
+
     return (
     <div className="flex flex-col h-screen bg-gray-100 drawer w-screen">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -20,16 +18,18 @@ const Home = () => (WrappedComponent) => {
 
         {/* Content */}
         <div className="flex-1 flex items-center justify-center bg-gray-200">
-          <WrappedComponent {...props}/>
+          <Routes>
+            <Route path="/" element={<BooksDisplay/>}></Route>
+            <Route path="/profile" element={<Profile/>}></Route>
+            <Route path="/issuedBooks" element={<IssuedBooksTable/>}></Route>
+          </Routes>
         </div>
       </div>
 
       <Dashboard/>
 
     </div>
-  );}
-};
-
-// WrappedComponent.displayName = 'Home';
+  );
+}
 
 export default Home;

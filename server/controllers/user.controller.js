@@ -64,14 +64,15 @@ export const sendRequest = async (req, res) => {
 // Get user profile
 export const getUserProfile = async (req, res) => {
     try {
-        const { userId } = req.params;
-        const user = await User.findById(userId).populate('currentBookIssued previousBookIssued');
+        const userA  = req.user;
+        // console.log("userId",user)
+        const user = await User.findById(userA._id).populate('currentBookIssued previousBookIssued');
 
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        const issuedBooksCount = await BookIssue.countDocuments({ borrower: userId });
+        const issuedBooksCount = await BookIssue.countDocuments({ borrower: userA._id });
 
         res.status(200).json({
             success: true,
@@ -81,6 +82,8 @@ export const getUserProfile = async (req, res) => {
                 profileImage: user.profile,
                 issuedBooksCount,
                 maxBookLimit: 2,
+                branch: user.branch,
+                year: user.year
             }
         });
     } catch (error) {
