@@ -17,7 +17,7 @@ const IndividualBook = () => {
       const {data} = await axios.post('http://localhost:8080/api/v1/user/request', {bookId: id}, {
         withCredentials: true
     });
-    console.log(data);
+    console.log("indbook",data);
     toast.success(data.message, {
       id: toastId
     });

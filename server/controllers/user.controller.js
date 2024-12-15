@@ -6,12 +6,24 @@ import { ErrorHandler } from '../utils/utility.js';
 
 export const getAllBooks = async (req, res) => {
     try {
-        const books = await Book.find();
-        res.status(200).json({
-            success: true,
-            books
-        });
+        if(req.query.search) {
+            console.log(req.query);
+            const { search } = req.query;
+            const books = await Book.find({
+                title: {$regex: ".*" + search + ".*", $options: "i"}
+            });
+            res.status(200).json({ success: true, books });
+        }
+        else {
+            const books = await Book.find();
+            res.status(200).json({
+                success: true,
+                books
+            });            
+        }
+
     } catch (error) {
+        console.log(error)
         res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -35,13 +47,29 @@ export const getBookDetails = async(req, res, next) => {
 
 export const getAllIssuedBooks = async (req, res) => {
     try {
-        const userId = req.user._id;
-        const issuedBooks = await BookIssue.find({ borrower: userId }).populate("bookId");
+        const userType = req.user.userType;
+        console.log(userType);
+        if(userType == "student" || userType == "staff") {
+            const userId = req.user._id;
+            const issuedBooks = await BookIssue.find({ borrower: userId })
+                                                .populate("bookId")
+                                                .populate("borrower", "name email branch year");
 
-        res.status(200).json({
-            success: true,
-            issuedBooks
+            return res.status(200).json({
+                    success: true,
+                    issuedBooks
+            });
+        }
+        else {
+            const issuedBooks  =await BookIssue.find()
+                                                .populate("bookId")
+                                                .populate("borrower", "name email branch year");
+            return res.status(200).json({
+                success: true,
+                issuedBooks
         });
+        }
+
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -53,7 +81,8 @@ export const sendRequest = async (req, res, next) => {
         const userId = req.user;
 
         const alreadyIssued = await Request.find({sender: userId, bookId})
-        if(alreadyIssued) {
+        console.log(alreadyIssued);
+        if(alreadyIssued.length > 0) {
             return next(new ErrorHandler("Book is already issued", 401));
         }
         const issuedBooksCount = await BookIssue.countDocuments({ borrower: userId });

@@ -1,21 +1,29 @@
 import { useEffect, useState } from 'react';
 import RequestsTableRow from './RequestsTableRow';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const RequestsTable = () => {
     const [requests, setRequests] = useState(null);
-    const requestHandler = async({accept, requestId}) => {
+    const requestHandler = async({accept, requestId, userId}) => {
+        const toastId = toast.loading("Sending Request...");
         try {
             const {data} = await axios.post('http://localhost:8080/api/v1/librarian/approveRequest', {
+                accept,
                 requestId,
-                accept
+                userId
             }, {
                 withCredentials: true
             });
-            console.log("data",data)
+            toast.success(data?.message, {
+                id: toastId
+            });
 
         } catch (error) {
             console.log(error)
+            toast.error(error?.response?.data?.message || "Something went wrong", {
+                id: toastId
+              })
         }
     }
 
@@ -72,7 +80,7 @@ const RequestsTable = () => {
             <tbody>
 
                 {requests?.map((item, key) => (
-                    <RequestsTableRow name={item.sender.name} branch={item.sender.branch} year={item.sender.year} book={item.bookId.title} key={key} index={item._id} handler = {requestHandler} no={key}/>
+                    <RequestsTableRow name={item.sender.name} branch={item.sender.branch} year={item.sender.year} book={item.bookId.title} key={key} index={item._id} handler = {requestHandler} no={key} userId={item.sender._id}/>
                 ))}
 
             </tbody>

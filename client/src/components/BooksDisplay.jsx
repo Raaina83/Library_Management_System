@@ -2,22 +2,26 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const BooksDisplay = () => {
+const BooksDisplay = ({search}) => {
   const [books, setBooks] = useState(null);
+  const searchParams = new URLSearchParams(location.search);
+  const searchQuery = searchParams.get("search") || "";
+  console.log(searchQuery);
+
   useEffect(() => {
     async function getBooks() {
       try {
-        const {data} = await axios.get('http://localhost:8080/api/v1/user/books', 
+        const {data} = await axios.get(`http://localhost:8080/api/v1/user/books?search=${searchQuery}`, 
           {withCredentials: true}
         );
-        console.log("data", data);
+        console.log("data after re-render", data);
         setBooks(data.books);
       } catch (error) {
         console.log(error);
       }
     }
-    if(books == null) getBooks() 
-  }, [])
+    getBooks() 
+  }, [searchQuery])
 
     // const books = [
     //     {

@@ -42,6 +42,7 @@ const getAllRequest = async(req, res) => {
 
 const approveRequest = async(req, res, next) => {
     const {accept, requestId, userId} = req.body;
+    console.log(accept, requestId, userId);
     const request = await Request.findById(requestId).populate("bookId");
     const user = await User.findById(userId);
 
@@ -97,7 +98,6 @@ const returnBook = async(req, res, next) => {
     const authUser = req.user;
     console.log(userId);
     const book = await BookIssue.findById(bookIssueId);
-    // const user = await User.findById(userId);
     if(authUser.userType != "librarian") {
         return next (new ErrorHandler("Unauthorized access(not a librarian!)", 401));
     }
@@ -111,18 +111,11 @@ const returnBook = async(req, res, next) => {
       )
 
       await book.deleteOne();
-
-    // await Promise.all([
-    //     book.deleteOne(),
-    //     authUser.updateOne(
-    //         { _id: userId }, // Find the user by ID
-    //         {
-    //           $pull: { currentBookIssued: bookIssueId }, // Remove the book from currentBookIssued
-    //           $push: { previousBookIssued: bookIssueId }, // Add the book to previousBookIssued (optional)
-    //         }
-    //       )
-    // ]);
-
+      res.status(200)
+        .json({
+            success: true,
+            message: "Book returned!"
+        })
 }
 
 export {getAllRequest, approveRequest, addNewBook, returnBook};
