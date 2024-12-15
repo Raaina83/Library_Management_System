@@ -7,17 +7,6 @@ import toast from "react-hot-toast"
 
 const Header = ({search, setSeach, handler}) => {
   const dispatch  = useDispatch();
-  // const navigate = useNavigate();
-
-  // const [search, setSearch] = useState("");
-
-  // const handleSearchChange = (e) => {
-  //   const value = e.target.value;
-  //   setSearch(value);
-
-  //   // Update the URL query parameter with the search value
-  //   navigate(`?search=${value}`);
-  // };
 
   const handleLogout = async() => {
     try {
@@ -37,7 +26,14 @@ const Header = ({search, setSeach, handler}) => {
 
   return (
     <div className="h-16 bg-white flex items-center justify-between px-6 shadow">
-      <div className="w-[50%] px-10">
+      <div className="w-[50%] flex gap-10">
+        <a href="/">
+          <img
+              alt="Your Company"
+              src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+              className="h-8 w-auto cursor-pointer"
+          />
+        </a>
         <input
             type="text"
             placeholder="Search..."
@@ -48,17 +44,17 @@ const Header = ({search, setSeach, handler}) => {
       </div>
 
       <div className="flex items-center space-x-6 mr-8">
-        <span className="material-icons cursor-pointer" 
+        {/* <span className="material-icons cursor-pointer" 
           onClick={()=>document.getElementById('my_modal_1').showModal()}><IoIosNotifications size={28}/></span>
-          <Notifications/>
+          <Notifications/> */}
         <label htmlFor="my-drawer" className="drawer-button">
         <img
-          src="https://via.placeholder.com/30"
+          src="https://images.pexels.com/photos/3769706/pexels-photo-3769706.jpeg?auto=compress&cs=tinysrgb&w=600"
           alt="User avatar"
-          className="w-10 h-10 rounded-full cursor-pointer"
+          className="w-12 h-12 rounded-full cursor-pointer"
         />
         </label>
-        <div onClick={handleLogout} className="cursor-pointer">
+        <div onClick={handleLogout} className="cursor-pointer text-red-950">
           Logout
         </div>
         </div>

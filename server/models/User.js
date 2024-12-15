@@ -18,8 +18,15 @@ const userSchema = new Schema({
         type: String,
         min: 6,
     },
-    profile: {
-        type: String,
+    profile:{
+        public_id: {
+          type: String,
+          required: true,
+        },
+        url: {
+          type: String,
+          required: true,
+        },
     },
     branch: {
         type: String,

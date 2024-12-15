@@ -5,7 +5,18 @@ import toast from 'react-hot-toast';
 
 const RequestsTable = () => {
     const [requests, setRequests] = useState(null);
+    async function getRequests() {
+        const {data} = await axios.get('http://localhost:8080/api/v1/librarian/getRequests', 
+            {
+                withCredentials: true
+            }
+        );
+        console.log("data", data);
+        setRequests(data.requests);
+    }
+
     const requestHandler = async({accept, requestId, userId}) => {
+        
         const toastId = toast.loading("Sending Request...");
         try {
             const {data} = await axios.post('http://localhost:8080/api/v1/librarian/approveRequest', {
@@ -15,9 +26,11 @@ const RequestsTable = () => {
             }, {
                 withCredentials: true
             });
+            getRequests();
             toast.success(data?.message, {
                 id: toastId
             });
+        
 
         } catch (error) {
             console.log(error)
@@ -37,7 +50,7 @@ const RequestsTable = () => {
             console.log("data", data);
             setRequests(data.requests);
         }
-        if(requests == null) getRequests();
+        getRequests();
     })
 
     // const data = [
@@ -91,6 +104,7 @@ const RequestsTable = () => {
                 <th>Job</th>
                 <th>company</th>
                 <th>Book</th>
+                <th>Requests</th>
             </tr>
             </tfoot>
         </table>

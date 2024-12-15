@@ -6,9 +6,12 @@ import { ErrorHandler } from "../utils/utility.js";
 
 const addNewBook = async(req, res, next) => {
     const {title, author, image, available} = req.body;
+    if(req.user.userTpe != "librarian") {
+        return next(new ErrorHandler("You are not authorized for the process", 401));
+    } 
 
     const book = await Book.find({title});
-    if(book) return next(new ErrorHandler("Book with same title already exists.", 401));
+    if(book.length > 0) return next(new ErrorHandler("Book with same title already exists.", 401));
 
     const newBook = new Book({
         title,

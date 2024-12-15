@@ -27,6 +27,30 @@ const IssuedBooksTable = () => {
       }
   }
 
+  const sendEmailHandler = async({email, book, dueDate}) => {
+    const toastId = toast.loading("Sending Request...");
+
+    try {
+      const {data} = await axios.post('http://localhost:8080/api/v1/email/send-overdue-notice', {
+          email,
+          book,
+          dueDate
+      }, {
+          withCredentials: true
+      });
+      console.log(data);
+      toast.success(data?.message, {
+          id: toastId
+      });
+
+  } catch (error) {
+      console.log(error)
+      toast.error(error?.response?.data?.message || "Something went wrong", {
+          id: toastId
+        })
+  }
+  }
+
     useEffect(() => {
         async function fetchData() {
           try {
@@ -80,11 +104,12 @@ const IssuedBooksTable = () => {
                 <th>Issued Book</th>
                 <th>Due Date</th>
                 <th>Return</th>
+                <th>Reminder</th>
             </tr>
             </thead>
             <tbody>
                 {issuedBooks?.map((item, key) => (
-                    <IssuedBooksTableRow name={item.borrower.name} book={item.bookId.title} branch={item.borrower.branch} year={item.borrower.year} dueDate={item.borrower.till} key={key} index={key} handler={returnHandler} bookIssueId={item._id} userId={item.borrower._id}/>
+                    <IssuedBooksTableRow name={item.borrower.name} book={item.bookId.title} branch={item.borrower.branch} year={item.borrower.year} dueDate={item.till} key={key} index={key} handler={returnHandler} bookIssueId={item._id} userId={item.borrower._id} email={item.borrower.email} emailHandler={sendEmailHandler}/>
                 ))}
             </tbody>
             <tfoot>
@@ -96,6 +121,7 @@ const IssuedBooksTable = () => {
                 <th>location</th>
                 <th>Last Login</th>
                 <th>Return</th>
+                <th>Reminder</th>
             </tr>
             </tfoot>
         </table>

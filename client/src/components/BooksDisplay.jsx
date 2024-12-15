@@ -64,21 +64,21 @@ const BooksDisplay = ({search}) => {
     //   ];
   return (
     <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 p-4">
               {books?.map((book) => (
                 <Link key={book._id} to={`/book/${book._id}`}>
                   <div
                   // key={book._id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-[23rem]"
                 >
                   <img
                     src={book.image}
                     alt={book.title}
-                    className="h-[16rem] w-full object-cover"
+                    className="h-[18rem] w-full object-cover"
                   />
                   <div className="pl-4">
-                    <h2 className="text-lg font-bold mb-1">{book.title}</h2>
-                    <p className="text-gray-700">by {book.author}</p>
+                    <h2 className="text-lg font-bold mt-1">{book.title}</h2>
+                    <p className="text-gray-700 text-sm">by {book.author}</p>
                   </div>
                 </div>
                  </Link>

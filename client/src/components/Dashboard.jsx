@@ -34,6 +34,11 @@ const Dashboard = () => {
       attribute: "Issued Books",
       icon: <FaBookOpen/>,
       link: "/dashboard/issuedBooks",
+    },
+    {
+      attribute: "Add New Book",
+      icon: <FaBookOpen/>,
+      link: "/dashboard/addBook"
     }
   ]
 

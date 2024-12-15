@@ -83,10 +83,11 @@ export const sendRequest = async (req, res, next) => {
         const alreadyIssued = await Request.find({sender: userId, bookId})
         console.log(alreadyIssued);
         if(alreadyIssued.length > 0) {
-            return next(new ErrorHandler("Book is already issued", 401));
+            return next(new ErrorHandler("Request is already sent!", 401));
         }
-        const issuedBooksCount = await BookIssue.countDocuments({ borrower: userId });
-        if (issuedBooksCount >= 2) {
+        // const issuedBooksCount = await BookIssue.countDocuments({ borrower: userId });
+        const user = await User.findById(userId);
+        if (user.currentBookIssued.length >= 2) {
             return res.status(400).json({ success: false, message: "User cannot issue more than 2 books." });
         }
 

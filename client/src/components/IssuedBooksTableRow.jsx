@@ -1,5 +1,7 @@
+import { extractDate } from "../utils/extractDate";
 
-const IssuedBooksTableRow = ({name, branch, year, book, dueDate, index, handler, bookIssueId, userId}) => {
+const IssuedBooksTableRow = ({name, branch, year, book, dueDate, index, handler, bookIssueId, userId, email, emailHandler}) => {
+  const modifiedDueDate = extractDate(dueDate);
   return (
     <tr>
         <th>{index+1}</th>
@@ -7,9 +9,12 @@ const IssuedBooksTableRow = ({name, branch, year, book, dueDate, index, handler,
         <td>{branch}</td>
         <td>{year}</td>
         <td>{book}</td>
-        <td>{dueDate}</td>
+        <td>{modifiedDueDate}</td>
         <td>
-          <button className='bg-green-400 px-4 py-2 rounded-md hover:shadow-md' onClick={() => handler({bookIssueId, userId})}>Return</button>
+          <button className='bg-green-500 px-4 py-2 rounded-md hover:shadow-md' onClick={() => handler({bookIssueId, userId})}>Return</button>
+        </td>
+        <td>
+          <button className='bg-red-500 px-4 py-2 rounded-md hover:shadow-md' onClick={() => emailHandler({email, book, dueDate})}>Send Email</button>
         </td>
     </tr>
   );

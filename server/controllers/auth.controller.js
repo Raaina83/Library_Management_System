@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { cookieOptions, generateTokenAndCookie } from "../utils/generateTokenAndCookie.js";
 import Librarian from "../models/Librarian.js";
 import { ErrorHandler } from "../utils/utility.js";
+import { uploadFilesToCloudinary } from "../utils/features.js";
 
 const login = async(req, res, next) => {
     const {name, email, password} = req.body;
@@ -15,11 +16,20 @@ const login = async(req, res, next) => {
 }
 
 const signUp = async(req, res, next) => {
-    const {userType, name, email, password, confirmPassword, profile, branch, year} = req.body;
-    if(password.length < 6) return next(new ErrorHandler("password must have at least 6 digits", 401));
+    const {userType, name, email, password, confirmPassword, branch, year} = req.body;
 
     if(password !== confirmPassword) {
-        return next(new ErrorHandler("Passwords does not match", 401));
+        return next(new ErrorHandler("Passwords does not match", 400));
+    }
+
+    const file = req.file;
+
+    if(!file) return next(new ErrorHandler("Please upload profile"))
+
+    const result = await uploadFilesToCloudinary([file]);
+    const profile = {
+        public_id: result[0].public_id,
+        url: result[0].url
     }
 
     const user = await User.findOne({email});
@@ -39,6 +49,7 @@ const signUp = async(req, res, next) => {
             year,
             profile
         });
+        console.log(newUser)
 
         await newUser.save();
         generateTokenAndCookie(newUser._id, res, "User created");

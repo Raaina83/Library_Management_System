@@ -7,6 +7,7 @@ import IssuedBooksTable from "./IssuedBooksTable";
 import RequestsTable from "./RequestsTable";
 import IndividualBook from "./IndividualBook";
 import { useState } from "react";
+import AddBook from "./AddBook";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ const Home = () => {
             <Route path="/profile" element={<Profile/>}></Route>
             <Route path="/issuedBooks" element={<IssuedBooksTable/>}></Route>
             <Route path="/requests" element={<RequestsTable/>}></Route>
+            <Route path="/addBook" element={<AddBook/>}></Route>
           </Routes>
         </div>
       </div>

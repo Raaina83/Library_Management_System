@@ -22,6 +22,9 @@ const bookSchema = new Schema({
             ref: "Rating"
         },
     ],
+    description: {
+        type: String
+    }
 }, {timestamps: true});
 
 const Book = mongoose.model("Book" ,bookSchema);

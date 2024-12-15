@@ -47,7 +47,7 @@ const Login = () => {
   
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 w-[25rem]">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Your Company"
@@ -120,7 +120,7 @@ const Login = () => {
           </p> */}
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Not a member?{' '}
-            <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+            <a href="/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">
               SignUp
             </a>
           </p>
