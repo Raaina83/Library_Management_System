@@ -20,6 +20,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const toastId = toast.loading("Signing you up...");
 
     const config = {
       withCredentials: true,
@@ -44,11 +45,15 @@ const Signup = () => {
       const response = await axios.post("http://localhost:8080/api/v1/auth/user/signup", formData, config);
       console.log(response.data);
       dispatch(userExists(response.data.user));
-      toast.success(response.data.message);
+      toast.success(response.data?.message, {
+        id: toastId
+      });
       window.location.href = "/";
     } catch (err) {
       console.log(err);
-      toast.error(err.response?.data?.message || "Signup failed");
+      toast.error(err.response?.data?.message || "Signup failed", {
+        id: toastId
+      });
     }
   };
 

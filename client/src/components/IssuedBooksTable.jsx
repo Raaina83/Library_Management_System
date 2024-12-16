@@ -2,9 +2,26 @@ import { useEffect, useState } from "react";
 import IssuedBooksTableRow from "./IssuedBooksTableRow";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const IssuedBooksTable = () => {
+    const {user} = useSelector(state => state.auth);
     const [issuedBooks, setIssuedBooks] = useState([]);
+
+    async function fetchData() {
+      try {
+        const {data} = await axios.get('http://localhost:8080/api/v1/user/books/issued', {
+          withCredentials: true
+        });
+        console.log("issue",data);
+        setIssuedBooks(data.issuedBooks);
+        // setLoading(false);
+      } catch (error) {
+        console.log(error);
+        // setError(error);
+        // setLoading(false);
+      }
+    }
 
     const returnHandler = async({bookIssueId, userId}) => {
       const toastId = toast.loading("Sending Request...");
@@ -15,6 +32,7 @@ const IssuedBooksTable = () => {
           }, {
               withCredentials: true
           });
+          fetchData();
           toast.success(data?.message, {
               id: toastId
           });
@@ -52,21 +70,6 @@ const IssuedBooksTable = () => {
   }
 
     useEffect(() => {
-        async function fetchData() {
-          try {
-            const {data} = await axios.get('http://localhost:8080/api/v1/user/books/issued', {
-              withCredentials: true
-            });
-            console.log("issue",data);
-            setIssuedBooks(data.issuedBooks);
-            // setLoading(false);
-          } catch (error) {
-            console.log(error);
-            // setError(error);
-            // setLoading(false);
-          }
-        }
-    
         fetchData();
       }, []);
     // const data = [
@@ -103,13 +106,13 @@ const IssuedBooksTable = () => {
                 <th>Year</th>
                 <th>Issued Book</th>
                 <th>Due Date</th>
-                <th>Return</th>
-                <th>Reminder</th>
+                {user.userType === "librarian"? <><th>Return</th>
+                <th>Reminder</th></>: <></>}
             </tr>
             </thead>
             <tbody>
                 {issuedBooks?.map((item, key) => (
-                    <IssuedBooksTableRow name={item.borrower.name} book={item.bookId.title} branch={item.borrower.branch} year={item.borrower.year} dueDate={item.till} key={key} index={key} handler={returnHandler} bookIssueId={item._id} userId={item.borrower._id} email={item.borrower.email} emailHandler={sendEmailHandler}/>
+                    <IssuedBooksTableRow name={item.borrower.name} book={item.bookId.title} branch={item.borrower.branch} year={item.borrower.year} dueDate={item.till} key={key} index={key} handler={returnHandler} bookIssueId={item._id} userId={item.borrower._id} email={item.borrower.email} emailHandler={sendEmailHandler} userType={user.userType}/>
                 ))}
             </tbody>
             <tfoot>
@@ -120,8 +123,8 @@ const IssuedBooksTable = () => {
                 <th>company</th>
                 <th>location</th>
                 <th>Last Login</th>
-                <th>Return</th>
-                <th>Reminder</th>
+                {user.userType === "librarian"? <><th>Return</th>
+                  <th>Reminder</th></>: <></>}
             </tr>
             </tfoot>
         </table>

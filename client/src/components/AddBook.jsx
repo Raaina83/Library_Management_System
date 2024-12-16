@@ -42,8 +42,8 @@ const AddBook = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Add a New Book</h2>
+    <div className="p-6 rounded-md w-[40rem]">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-2">Add a New Book</h2>
       <form onSubmit={handleSubmit}>
         <label className="block mb-4">
           <span className="text-gray-700">Title</span>
