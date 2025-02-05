@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { server } from "../constants/config";
 
 const AddBook = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ const AddBook = () => {
     e.preventDefault();
     const toastId = toast.loading("Adding Book...");
     try {
-      const {data} = await axios.post("http://localhost:8080/api/v1/librarian/addBook", formData, {withCredentials: true});
+      const {data} = await axios.post(`${server}/api/v1/librarian/addBook`, formData, {withCredentials: true});
       console.log(data);
       toast.success(data?.message, {
         id: toastId

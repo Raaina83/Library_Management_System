@@ -3,6 +3,7 @@ import { useState } from "react";
 import { userExists } from "../redux/reducers/auth";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
+import { server } from "../constants/config";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const Login = () => {
     };
 
     try {
-      const {data} = await axios.post('http://localhost:8080/api/v1/auth/user/login', 
+      const {data} = await axios.post(`${server}/api/v1/auth/user/login`, 
         {
           name: "priya",
           email,

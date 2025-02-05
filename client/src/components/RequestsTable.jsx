@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import RequestsTableRow from './RequestsTableRow';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { server } from '../constants/config';
 
 const RequestsTable = () => {
     const [requests, setRequests] = useState(null);
     async function getRequests() {
-        const {data} = await axios.get('http://localhost:8080/api/v1/librarian/getRequests', 
+        const {data} = await axios.get(`${server}/api/v1/librarian/getRequests`, 
             {
                 withCredentials: true
             }
@@ -19,7 +20,7 @@ const RequestsTable = () => {
         
         const toastId = toast.loading("Sending Request...");
         try {
-            const {data} = await axios.post('http://localhost:8080/api/v1/librarian/approveRequest', {
+            const {data} = await axios.post(`${server}/api/v1/librarian/approveRequest`, {
                 accept,
                 requestId,
                 userId
@@ -42,7 +43,7 @@ const RequestsTable = () => {
 
     useEffect(() => {
         async function getRequests() {
-            const {data} = await axios.get('http://localhost:8080/api/v1/librarian/getRequests', 
+            const {data} = await axios.get(`${server}/api/v1/librarian/getRequests`, 
                 {
                     withCredentials: true
                 }

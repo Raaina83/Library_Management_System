@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useFileHandler } from "6pp";
 import { useDispatch } from 'react-redux';
 import { userExists } from "../redux/reducers/auth";
+import { server } from "../constants/config";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const Signup = () => {
     console.log("form",formData)
       
     try {
-      const response = await axios.post("http://localhost:8080/api/v1/auth/user/signup", formData, config);
+      const response = await axios.post(`${server}/api/v1/auth/user/signup`, formData, config);
       console.log(response.data);
       dispatch(userExists(response.data.user));
       toast.success(response.data?.message, {

@@ -11,6 +11,7 @@ import {Toaster} from "react-hot-toast";
 import Signup from "./components/SignUp";
 import ProtectRoute from "./components/auth/ProtectRoute";
 import LayoutLoader from "./components/layout/LayoutLoader";
+import { server } from "./constants/config";
 
 function App() {
   const {user, loader} = useSelector(state => state.auth);
@@ -19,7 +20,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/v1/user/profile", { withCredentials: true })
+      .get(`${server}/api/v1/user/profile`, { withCredentials: true })
       .then(({ data }) => {
         dispatch(userExists(data.profile))
       })  

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { server } from "../constants/config";
 
 const BooksDisplay = ({search}) => {
   const [books, setBooks] = useState(null);
@@ -11,7 +12,7 @@ const BooksDisplay = ({search}) => {
   useEffect(() => {
     async function getBooks() {
       try {
-        const {data} = await axios.get(`http://localhost:8080/api/v1/user/books?search=${searchQuery}`, 
+        const {data} = await axios.get(`${server}/api/v1/user/books?search=${searchQuery}`, 
           {withCredentials: true}
         );
         console.log("data after re-render", data);

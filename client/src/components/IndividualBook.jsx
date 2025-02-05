@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
+import { server } from '../constants/config';
 
 const IndividualBook = () => {
   const { id } = useParams();
@@ -14,7 +15,7 @@ const IndividualBook = () => {
     const toastId = toast.loading("Sending request...");
 
     try {
-      const {data} = await axios.post('http://localhost:8080/api/v1/user/request', {bookId: id}, {
+      const {data} = await axios.post(`${server}/api/v1/user/request`, {bookId: id}, {
         withCredentials: true
     });
     console.log("indbook",data);
@@ -31,7 +32,7 @@ const IndividualBook = () => {
 
   useEffect(() => {
     const fetchBookDetails = async () => {
-      const {data} = await axios.get(`http://localhost:8080/api/v1/user/books/${id}`, {
+      const {data} = await axios.get(`${server}/api/v1/user/books/${id}`, {
         withCredentials: true
       });
     //   const data = await response.json();

@@ -4,6 +4,7 @@ import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { userNotExists } from "../redux/reducers/auth"
 import toast from "react-hot-toast"
+import { server } from "../constants/config"
 
 const Header = ({search, setSeach, handler}) => {
   const {user, loader} = useSelector(state => state.auth);
@@ -12,7 +13,7 @@ const Header = ({search, setSeach, handler}) => {
 
   const handleLogout = async() => {
     try {
-      const {data} = await axios.get("http://localhost:8080/api/v1/auth/user/logout", {
+      const {data} = await axios.get(`${server}/api/v1/auth/user/logout`, {
         withCredentials: true
       })
       dispatch(userNotExists());
