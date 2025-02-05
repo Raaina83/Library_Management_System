@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux"
-import Home from "./Home"
 
 const Profile = () => {
     const {user} = useSelector(state => state.auth)
@@ -10,7 +9,8 @@ const Profile = () => {
         {/* Profile Header */}
         <div className="flex items-center gap-6 pb-6 border-b border-gray-300">
           <img
-            src="https://images.pexels.com/photos/3769706/pexels-photo-3769706.jpeg?auto=compress&cs=tinysrgb&w=600"
+            // src="https://images.pexels.com/photos/3769706/pexels-photo-3769706.jpeg?auto=compress&cs=tinysrgb&w=600"
+            src={user.profileImage.url}
             alt="User Avatar"
             className="h-24 w-24 rounded-full object-cover border border-gray-300"
           />

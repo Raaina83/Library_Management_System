@@ -6,7 +6,7 @@ import { ErrorHandler } from "../utils/utility.js";
 
 const addNewBook = async(req, res, next) => {
     const {title, author, image, available} = req.body;
-    if(req.user.userTpe != "librarian") {
+    if(req.user.userType != "librarian") {
         return next(new ErrorHandler("You are not authorized for the process", 401));
     } 
 

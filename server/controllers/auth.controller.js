@@ -7,7 +7,7 @@ import { uploadFilesToCloudinary } from "../utils/features.js";
 
 const login = async(req, res, next) => {
     const {name, email, password} = req.body;
-    const user = await User.findOne({email});
+    const user = await User.findOne({email}).populate("previousBookIssued");
     const isValidPassword = await bcrypt.compare(password, user?.password);
     if(!user || !isValidPassword) {
         return next(new ErrorHandler("Invalid username or password!", 401));
@@ -70,7 +70,8 @@ const signUp = async(req, res, next) => {
             userType,
             name: name,
             email: email,
-            password: hashedPassword
+            password: hashedPassword,
+            profile
         });
         await newUser.save();
         generateTokenAndCookie(newUser._id, res, "User created");

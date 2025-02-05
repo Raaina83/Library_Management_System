@@ -1,11 +1,13 @@
 import { IoIosNotifications } from "react-icons/io"
 import { Notifications } from "./Notifications"
 import axios from "axios"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { userNotExists } from "../redux/reducers/auth"
 import toast from "react-hot-toast"
 
 const Header = ({search, setSeach, handler}) => {
+  const {user, loader} = useSelector(state => state.auth);
+
   const dispatch  = useDispatch();
 
   const handleLogout = async() => {
@@ -49,7 +51,8 @@ const Header = ({search, setSeach, handler}) => {
           <Notifications/> */}
         <label htmlFor="my-drawer" className="drawer-button">
         <img
-          src="https://images.pexels.com/photos/3769706/pexels-photo-3769706.jpeg?auto=compress&cs=tinysrgb&w=600"
+          // src="https://images.pexels.com/photos/3769706/pexels-photo-3769706.jpeg?auto=compress&cs=tinysrgb&w=600"
+          src={user.profileImage.url}
           alt="User avatar"
           className="w-12 h-12 rounded-full cursor-pointer"
         />

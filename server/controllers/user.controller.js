@@ -126,7 +126,8 @@ export const getUserProfile = async (req, res) => {
                 userType: user.userType,
                 profileImage: user.profile,
                 branch: user.branch,
-                year: user.year
+                year: user.year,
+                previous: user.previousBookIssued
             }
         });
     } catch (error) {
