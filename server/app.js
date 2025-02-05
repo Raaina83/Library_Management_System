@@ -11,8 +11,8 @@ import cors from 'cors'
 import errorMiddleware from './middlewares/error.js';
 import {v2 as cloudinary} from 'cloudinary';
 
+const PORT = process.env.PORT | 5000;
 const app = express();
-
 connectToDB(process.env.MONGO_URI);
 
 cloudinary.config({
@@ -35,6 +35,6 @@ app.use("/api/v1/email", emailRoutes);
 
 app.use(errorMiddleware)
 
-app.listen(8080, () => {
+app.listen(PORT, () => {
     console.log("app is listening on port 8080");
 })
