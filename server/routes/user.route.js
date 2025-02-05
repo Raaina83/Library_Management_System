@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllBooks, getAllIssuedBooks, sendRequest, getUserProfile, getBookDetails } from '../controllers/User.controller.js';
+import { getAllBooks, getAllIssuedBooks, sendRequest, getUserProfile, getBookDetails } from '../controllers/user.controller.js';
 import { protectRoute } from '../middlewares/protectRoute.js';
 
 const router = express.Router();
