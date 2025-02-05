@@ -10,10 +10,12 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import errorMiddleware from './middlewares/error.js';
 import {v2 as cloudinary} from 'cloudinary';
+import { createServer } from 'http';
 
-const PORT = process.env.PORT | 5000;
+
+const PORT = process.env.PORT || 5000;
 const app = express();
-connectToDB(process.env.MONGO_URI);
+const server = createServer(app);
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -34,7 +36,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/email", emailRoutes);
 
 app.use(errorMiddleware)
-
-app.listen(PORT, () => {
-    console.log("app is listening on port 8080");
+server.listen(PORT, () => {
+    connectToDB(process.env.MONGO_URI);
+    console.log(`app is listening on port ${PORT}`);
 })
