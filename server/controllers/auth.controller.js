@@ -9,7 +9,7 @@ const login = async(req, res, next) => {
     const {name, email, password} = req.body;
     const user = await User.findOne({email});
     if(user.userType == "student" || "staff") {
-        user = user.populate("previousBookIssued")
+        user = await User.findOne({email}).populate("previousBookIssued")
     }
     const isValidPassword = await bcrypt.compare(password, user?.password);
     if(!user || !isValidPassword) {
