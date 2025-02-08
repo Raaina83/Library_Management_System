@@ -7,7 +7,10 @@ import { uploadFilesToCloudinary } from "../utils/features.js";
 
 const login = async(req, res, next) => {
     const {name, email, password} = req.body;
-    const user = await User.findOne({email}).populate("previousBookIssued");
+    const user = await User.findOne({email});
+    if(user.userType == "student" || "staff") {
+        user = user.populate("previousBookIssued")
+    }
     const isValidPassword = await bcrypt.compare(password, user?.password);
     if(!user || !isValidPassword) {
         return next(new ErrorHandler("Invalid username or password!", 401));
