@@ -4,11 +4,12 @@ import { userExists } from "../redux/reducers/auth";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { server } from "../constants/config";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,7 +26,6 @@ const Login = () => {
     try {
       const {data} = await axios.post(`${server}/api/v1/auth/user/login`, 
         {
-          name: "priya",
           email,
           password
         },
@@ -36,7 +36,8 @@ const Login = () => {
       toast.success(data.message, {
         id: toastId
       });
-      window.location.href= "/dashboard";
+      navigate("/dashboard");
+      // window.location.href= "/dashboard";
 
     } catch (error) {
       console.log(error)
