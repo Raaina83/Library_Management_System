@@ -1,5 +1,5 @@
 import express from 'express'
-import connectToDB from './connectionMongoDB/connect.js';
+import {connectToMongoDB} from './connectionMongoDB/connect.js';
 import dotenv from "dotenv";
 dotenv.config();
 import authUser from './routes/auth.route.js';
@@ -37,6 +37,6 @@ app.use("/api/v1/email", emailRoutes);
 
 app.use(errorMiddleware)
 server.listen(PORT, () => {
-    connectToDB(process.env.MONGO_URI);
+    connectToMongoDB(process.env.MONGO_URI);
     console.log(`app is listening on port ${PORT}`);
 })

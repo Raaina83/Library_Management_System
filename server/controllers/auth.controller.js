@@ -1,21 +1,28 @@
 import User from "../models/User.js";
 import bcrypt from 'bcryptjs';
 import { cookieOptions, generateTokenAndCookie } from "../utils/generateTokenAndCookie.js";
-import Librarian from "../models/Librarian.js";
 import { ErrorHandler } from "../utils/utility.js";
 import { uploadFilesToCloudinary } from "../utils/features.js";
 
 const login = async(req, res, next) => {
-    const {name, email, password} = req.body;
+    const {email, password} = req.body;
     const user = await User.findOne({email});
     if(user.userType == "student" || "staff") {
-        user = await User.findOne({email}).populate("previousBookIssued")
+        const user_1 = await User.findOne({email}).populate("previousBookIssued");
+        const isValidPassword = await bcrypt.compare(password, user?.password);
+        if(!user || !isValidPassword) {
+            return next(new ErrorHandler("Invalid username or password!", 401));
+        }
+        generateTokenAndCookie(user, res, `Welcome back ${user_1.name}`);
     }
-    const isValidPassword = await bcrypt.compare(password, user?.password);
-    if(!user || !isValidPassword) {
-        return next(new ErrorHandler("Invalid username or password!", 401));
+    else {
+        const isValidPassword = await bcrypt.compare(password, user?.password);
+        if(!user || !isValidPassword) {
+            return next(new ErrorHandler("Invalid username or password!", 401));
+        }
+        generateTokenAndCookie(user, res, `Welcome back ${user.name}`);
     }
-    generateTokenAndCookie(user, res, `Welcome back ${user.name}`);
+    
 }
 
 const signUp = async(req, res, next) => {
